@@ -1,4 +1,4 @@
-# Проект схожий с [AirBnB.com](http://airbnb.com/) (или [booking.com](http://booking.com/), пока не решил окончательно).
+> Проект схожий с [AirBnB.com](http://airbnb.com/) (или [booking.com](http://booking.com/), пока не решил окончательно).
 
 # Лаборатория Django-разработки от школы Thinknetica
 
