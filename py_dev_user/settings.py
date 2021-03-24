@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -124,5 +126,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 SITE_ID = 1
+
+CKEDITOR_UPLOAD_PATH = '/upload/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
