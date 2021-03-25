@@ -131,5 +131,19 @@ STATIC_URL = '/static/'
 SITE_ID = 1
 
 CKEDITOR_UPLOAD_PATH = '/upload/'
-MEDIA_URL = '/media/'
+
+# media settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+THUMBNAIL_ALIASES = {
+    '': {
+        'default': {
+            'size': (96, 96),
+            'crop': 'scale',
+        },
+    },
+}
+
+THUMBNAIL_BASEDIR = 'media/thumbnails'
+
+MEDIA_DIR = 'media'
+
