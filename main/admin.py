@@ -59,7 +59,31 @@ class ItemAdmin(admin.ModelAdmin):
     )
 
     inlines = (ExtraImagesInline,)
+    actions = ['activate_item', 'deactivate_item']
 
+    def activate_item(self, request, queryset):
+        row_update = queryset.update(published=True)
+        if row_update == 1:
+            message_bit = 'One item was updated'
+        else:
+            message_bit = f'{row_update} items were updated'
+
+        self.message_user(request, f'{message_bit}')
+
+    def deactivate_item(self, request, queryset):
+        row_update = queryset.update(published=False)
+        if row_update == 1:
+            message_bit = 'One item was updated'
+        else:
+            message_bit = f'{row_update} items were updated'
+
+        self.message_user(request, f'{message_bit}')
+
+    activate_item.short_description = 'Activate'
+    activate_item.allowed_permission = ('change',)
+
+    deactivate_item.short_description = 'Deactivate'
+    deactivate_item.allowed_permission = ('change',)
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent')
