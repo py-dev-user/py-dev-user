@@ -48,11 +48,12 @@ class ExtraImagesInline(admin.TabularInline):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('short_name', 'category', 'price', 'currency', 'seller', 'item_create', 'item_update')
+    list_display = ('short_name', 'category', 'price', 'currency', 'seller', 'published', 'item_create', 'item_update')
     fields = (
         ('short_name', 'seller'),
         'description',
-        ('category', 'price', 'currency'),
+        ('category', 'published', 'in_stock'),
+        ('price', 'currency'),
         'tag',
         'image'
     )
