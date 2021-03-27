@@ -60,6 +60,7 @@ class ItemModel(models.Model):
     price = models.FloatField(verbose_name='Price', default=0.0)
     currency = models.ForeignKey(CurrencyModel, on_delete=models.SET_NULL, blank=True, null=True)
     published = models.BooleanField(verbose_name='Published', default=True)
+    in_stock = models.BooleanField(verbose_name='In stock', default=True)
     item_create = models.DateTimeField(auto_now_add=True, verbose_name='created')
     item_update = models.DateTimeField(auto_now=True, verbose_name='updated')
 
