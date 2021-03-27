@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block header %}
+    {% include 'main/header.html' with user_name=user %}
+{% endblock %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
