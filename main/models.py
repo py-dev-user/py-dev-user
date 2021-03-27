@@ -31,6 +31,17 @@ class TagModel(models.Model):
         verbose_name = 'Tag'
 
 
+class CurrencyModel(models.Model):
+    full_name = models.CharField(max_length=25, verbose_name='Полное имя')
+    short_name = models.CharField(max_length=5, verbose_name='Короткое имя')
+
+    def __str__(self):
+        return self.short_name
+
+    class Meta:
+        verbose_name = 'Currency'
+
+
 class SellerModel(User):
     phone = models.CharField(max_length=25, verbose_name='Phone', null=True, blank=True)
 
@@ -46,6 +57,8 @@ class ItemModel(models.Model):
     tag = models.ManyToManyField(TagModel, blank=True)
     seller = models.ForeignKey(SellerModel, on_delete=models.CASCADE)
     category = models.ForeignKey(CategoryModel, on_delete=models.SET_NULL, blank=True, null=True)
+    price = models.FloatField(verbose_name='Price', default=0.0)
+    currency = models.ForeignKey(CurrencyModel, on_delete=models.SET_NULL, blank=True, null=True)
     published = models.BooleanField(verbose_name='Published', default=True)
     item_create = models.DateTimeField(auto_now_add=True, verbose_name='created')
     item_update = models.DateTimeField(auto_now=True, verbose_name='updated')
