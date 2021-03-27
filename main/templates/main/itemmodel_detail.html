@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{#{% load main_tags %}#}
+{#{% load main_filters %}#}
+{% load thumbnail %}
+
+{% block nav_bar %}{% include 'main/nav_bar.html' %}{% endblock %}
+
+{% block title %}{{ itemmodel.short_name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ itemmodel.short_name }}</h2>
+    <img class="" src="{% thumbnail itemmodel.image 'avatar' %}">
+    <div>
+        <a class="btn btn-secondary" href="{% url 'item_list' %}">Back to list</a>
+        {{ itemmodel.description | safe }}
+    </div>
+    {% for copy in itemmodel.additionalimage_set.all %}
+        <div style="margin-bottom: 10px;">
+            <img class="additional-image" src="{% thumbnail copy.image 'image' %}">
+        </div>
+    {% endfor %}
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+
+
+
+{% endblock %}

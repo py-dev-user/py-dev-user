@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'ckeditor',
     'ckeditor_uploader',
+    'easy_thumbnails',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -134,16 +136,22 @@ CKEDITOR_UPLOAD_PATH = '/upload/'
 
 # media settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+THUMBNAIL_BASEDIR = 'media/thumbnails'
 THUMBNAIL_ALIASES = {
     '': {
         'default': {
-            'size': (96, 96),
+            'size': (200, 250),
+            'crop': True,
+        },
+        'avatar': {
+            'size': (300, 300),
             'crop': 'scale',
         },
+        'image': {
+            'size': (600, 600),
+            'crop': 'scale',
+        }
     },
 }
-
-THUMBNAIL_BASEDIR = 'media/thumbnails'
-
-MEDIA_DIR = 'media'
-
