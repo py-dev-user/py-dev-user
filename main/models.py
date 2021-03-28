@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
@@ -72,6 +73,9 @@ class ItemModel(models.Model):
             ai.delete()
 
         super().delete(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('item_detail', args=[str(self.id)])
 
     class Meta:
         verbose_name = 'Item'
