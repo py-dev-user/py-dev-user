@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
-{% block header %}
-    {% include 'main/header.html' with user_name=user %}
+{% load main_tags %}
+{% load main_filters %}
+
+{% block nav_bar %}
+    {% include 'main/nav_bar.html' %}
 {% endblock %}
 
 {% block title %}Home{% endblock %}
@@ -10,6 +13,8 @@
     <h1>Home page</h1>
     <h3>Hello, {{ user }}</h3>
     {% if turn_on_block %}
-        <div>Show DIV block</div>
+        <div><strong>Current server time:</strong> {% get_current_time %}</div>
+
+        <div>Revers string <strong>'Some string'</strong> by filter: {{ 'Some string' | rev_str }}</div>
     {% endif %}
 {% endblock %}
