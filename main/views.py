@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404
 
-from .models import ItemModel
+from .models import ItemModel, TagModel
 
 
 def index(request):
@@ -11,8 +12,19 @@ def index(request):
 
 class ItemListView(ListView):
     model = ItemModel
-    queryset = ItemModel.objects.all().filter(published=1)
+    queryset = ItemModel.objects.filter(published=1)
+    paginate_by = 5
 
 
 class ItemDetailView(DetailView):
     model = ItemModel
+
+
+class ItemListByTagView(ListView):
+    model = ItemModel
+    paginate_by = 5
+
+    def get_queryset(self):
+        tag = get_object_or_404(TagModel, tag=self.kwargs['tag_name'])
+        items = ItemModel.objects.filter(tag=tag.id)
+        return ItemModel.objects.filter(tag=tag.id)

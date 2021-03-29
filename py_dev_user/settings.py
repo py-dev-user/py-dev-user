@@ -142,7 +142,7 @@ THUMBNAIL_BASEDIR = 'media/thumbnails'
 THUMBNAIL_ALIASES = {
     '': {
         'default': {
-            'size': (200, 250),
+            'size': (250, 350),
             'crop': True,
         },
         'avatar': {

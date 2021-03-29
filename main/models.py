@@ -79,6 +79,7 @@ class ItemModel(models.Model):
 
     class Meta:
         verbose_name = 'Item'
+        ordering = ['-item_create']
 
 
 class AdditionalImage(models.Model):
