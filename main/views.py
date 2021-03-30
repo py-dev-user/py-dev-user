@@ -12,19 +12,15 @@ def index(request):
 
 class ItemListView(ListView):
     model = ItemModel
-    queryset = ItemModel.objects.filter(published=1)
     paginate_by = 5
+
+    def get_queryset(self):
+        try:
+            tag = get_object_or_404(TagModel, tag=self.kwargs['tag_name'])
+            return ItemModel.objects.filter(tag=tag.id)
+        except KeyError as ex:
+            return ItemModel.objects.filter(published=1)
 
 
 class ItemDetailView(DetailView):
     model = ItemModel
-
-
-class ItemListByTagView(ListView):
-    model = ItemModel
-    paginate_by = 5
-
-    def get_queryset(self):
-        tag = get_object_or_404(TagModel, tag=self.kwargs['tag_name'])
-        items = ItemModel.objects.filter(tag=tag.id)
-        return ItemModel.objects.filter(tag=tag.id)

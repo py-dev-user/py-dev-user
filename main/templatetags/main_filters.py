@@ -12,9 +12,6 @@ def revers_string(value):
 def truncate_description(value):
     idx = value.find('<hr />')
     if idx < 0:
-        idx = value.find('<hr/>')
-
-    if idx < 0:
         short_desc = value
     else:
         short_desc = value[: idx] + '<span class="h3">&#8230;</span>'
