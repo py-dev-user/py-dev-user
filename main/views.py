@@ -17,7 +17,7 @@ class ItemListView(ListView):
     def get_queryset(self):
         try:
             tag = get_object_or_404(TagModel, tag=self.kwargs['tag_name'])
-            return ItemModel.objects.filter(tag=tag.id)
+            return ItemModel.objects.filter(tag=tag.id, published=1)
         except KeyError as ex:
             return ItemModel.objects.filter(published=1)
 
