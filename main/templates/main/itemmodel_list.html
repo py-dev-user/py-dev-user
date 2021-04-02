@@ -4,15 +4,13 @@
 {% load main_filters %}
 {% load thumbnail %}
 
-{% block nav_bar %}{% include 'main/nav_bar.html' %}{% endblock %}
-
 {% block title %}Item list{% endblock %}
 
 {% block content %}
     <h1>Item list</h1>
     {% if itemmodel_list %}
         {% for item in itemmodel_list %}
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3" style="max-width: 750px;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="{% thumbnail item.image 'default' %}" alt="img">
@@ -22,12 +20,13 @@
                             <h5 class="card-title">
                                 <a href="{{ item.get_absolute_url }}">{{ item.short_name }}</a>
                             </h5>
-                            <p class="card-text">{{ item.description | safe | truncatewords:8 }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    <strong>Price:</strong> {{ item.price }} {{ item.currency }}
-                                </small>
+                            <p class="card-text">{{ item.description | trunc_desc | safe }}</p>
+                            <p class="card-text h4">
+                                <strong>Price:</strong> {{ item.price }} {{ item.currency }}
                             </p>
+                            {% for tag in item.tag.all %}
+                                <a href="{% url 'items_by_tag' tag %}">#{{ tag }}&nbsp;</a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
