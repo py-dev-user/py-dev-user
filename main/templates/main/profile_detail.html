@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load main_tags %}
+{% load main_filters %}
+
+{% block title %}user profile{% endblock %}
+
+{% block content %}
+    <h1>User profile</h1>
+    <table>
+        <tr>
+            <td>First name: </td>
+            <td>{{ profile.user.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Last name: </td>
+            <td>{{ profile.user.last_name }}</td>
+        </tr>
+        <tr>
+            <td>email: </td>
+            <td>{{ profile.user.email }}</td>
+        </tr>
+        <tr>
+            <td>Birth day: </td>
+            <td>{{ profile.date_of_birth }}</td>
+        </tr>
+    </table>
+    <a href="{% url 'profile-update' %}" class="btn btn-primary">Change</a>
+{% endblock %}

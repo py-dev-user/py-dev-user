@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}change user profile{% endblock %}
+
+{% block content %}
+    <h1>Change profile</h1>
+    <form action='.' method='post'>
+        {% csrf_token %}
+        <table>
+            {{ profile_form }}
+            {{ user_form }}
+        </table>
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}
