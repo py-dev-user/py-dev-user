@@ -145,13 +145,17 @@ THUMBNAIL_ALIASES = {
             'size': (250, 350),
             'crop': True,
         },
-        'avatar': {
+        'preview': {
             'size': (300, 300),
             'crop': 'scale',
         },
         'image': {
             'size': (600, 600),
             'crop': 'scale',
-        }
+        },
+        'avatar': {
+            'size' : (30, 30),
+            'crop': 'scale',
+        },
     },
 }

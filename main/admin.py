@@ -95,7 +95,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class UserProfileInline(admin.TabularInline):
     model = Profile
-    fields = ('date_of_birth',)
+    fields = ('avatar', 'date_of_birth',)
 
 
 class UserAdminCustom(UserAdmin):
