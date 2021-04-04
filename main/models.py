@@ -54,7 +54,6 @@ class SellerModel(User):
 
 class ItemModel(models.Model):
     short_name = models.CharField(max_length=100, verbose_name='Object name', db_index=True)
-    # description = models.TextField(verbose_name='Description')
     description = RichTextField()
     image = models.ImageField(verbose_name='Image', blank=True, null=True, upload_to=get_timestamp_path)
     tag = models.ManyToManyField(TagModel, blank=True)
