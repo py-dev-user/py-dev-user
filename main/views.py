@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView, LogoutView
 
 from .models import ItemModel, TagModel, Profile
 from .forms import UserForm, ProfileForm
@@ -37,6 +39,7 @@ class UserProfileView(DetailView):
 
 
 # позже заменю на класс
+@login_required
 def update_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
@@ -70,3 +73,7 @@ class ItemUpdateView(PermissionRequiredMixin, UpdateView):
 
 class ItemDeleteView(PermissionRequiredMixin, DeleteView):
     pass
+
+
+class MainLoginView(LoginView):
+    template_name = 'main/../templates/registration/login.html'
