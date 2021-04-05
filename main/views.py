@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
 from django.http.response import HttpResponseRedirect
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .models import ItemModel, TagModel, Profile
 from .forms import UserForm, ProfileForm
@@ -53,3 +54,19 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
+class ItemCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'main.add_item'
+    model = ItemModel
+    fields = '__all__'
+
+
+class ItemUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'main.change_item'
+    model = ItemModel
+    fields = '__all__'
+
+
+class ItemDeleteView(PermissionRequiredMixin, DeleteView):
+    pass

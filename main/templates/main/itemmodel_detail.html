@@ -9,8 +9,11 @@
 {% block content %}
     <h2>{{ itemmodel.short_name }}</h2>
     <img class="" src="{% thumbnail itemmodel.image 'avatar' %}">
+    <div class="d-grid gap-2 d-md-block mt-3">
+        <a class="btn btn-primary"  href="{% url 'item_list' %}">Back to list</a>
+        <a class="btn btn-primary"  href="{% url 'update-item' itemmodel.id %}">Change item</a>
+    </div>
     <div class="mt-3">
-        <a class="btn btn-secondary mb-3" href="{% url 'item_list' %}">Back to list</a>
         {{ itemmodel.description | safe }}
     </div>
     {% for copy in itemmodel.additionalimage_set.all %}

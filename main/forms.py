@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from main.models import Profile
+from .models import Profile
 
 
 class UserForm(forms.ModelForm):
@@ -30,4 +30,3 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('date_of_birth',)
-
