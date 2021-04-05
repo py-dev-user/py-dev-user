@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
-{% load main_tags %}
-{% load main_filters %}
+{% load static %}
+{% load thumbnail %}
 
 {% block title %}user profile{% endblock %}
 
 {% block content %}
     <h1>User profile</h1>
     <table>
+        <tr>
+            <td>
+                <!-- 20210405010133.png -->
+                {% if user.profile.avatar.name is None or user.profile.avatar.name == '' %}
+                    <img class="" src="{% static 'img/no_avatar.png' %}" width="100" height="100">
+                {% else %}
+                    <img src="{% thumbnail user.profile.avatar 100x100 crop HIGH_RESOLUTION=0 %}">
+                {% endif %}
+            </td>
+        </tr>
         <tr>
             <td>First name: </td>
             <td>{{ profile.user.first_name }}</td>

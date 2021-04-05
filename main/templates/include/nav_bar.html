@@ -1,3 +1,6 @@
+{% load static %}
+{% load thumbnail %}
+
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{% url 'index' %}">Рога и Копыта</a></h5>
     <nav class="my-2 my-md-0 mr-md-3">
@@ -8,9 +11,11 @@
         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
             <li><a class="dropdown-item" href="{% url 'item_list' %}">List of items</a></li>
             {% if user.is_authenticated %}
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'create-item' %}">Add new item</a></li>
-            <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'create-item' %}">Add new item</a></li>
+                <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
             {% endif %}
         </ul>
         <a class="p-2 text-dark" href="#">Enterprise</a>
@@ -22,14 +27,25 @@
             User
         </button>
         <ul class="dropdown-menu">
-                {% if user.is_authenticated %}
-                    <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Sign Out</a></li>
-                {% else %}
-                    <li><a class="dropdown-item" href="#">Sign In</a></li>
-                    <li><a class="dropdown-item" href="#">Registration</a></li>
-                {% endif %}
+            {% if user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Sign Out</a></li>
+            {% else %}
+                <li><a class="dropdown-item" href="#">Sign In</a></li>
+                <li><a class="dropdown-item" href="#">Registration</a></li>
+            {% endif %}
         </ul>
     </div>
+    <nav class="navbar navbar-light">
+        <div class="container">
+            {% if user.is_authenticated and user.profile.avatar.name is not None and user.profile.avatar.name != ''  %}
+            <img class="" src="{% thumbnail user.profile.avatar 'avatar' %}" alt="avatar">
+            {% else %}
+            <img class="" src="{% static 'img/no_avatar.png' %}" width="30" height="30">
+            {% endif %}
+        </div>
+    </nav>
 </div>
