@@ -45,6 +45,11 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'easy_thumbnails',
     'django_cleanup',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -79,6 +84,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'py_dev_user.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -87,6 +96,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
     }
 }
 
@@ -129,16 +150,19 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/'
 
+SITE_ID = 1
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = True
+
+CKEDITOR_UPLOAD_PATH = '/upload/'
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-SITE_ID = 1
-
-CKEDITOR_UPLOAD_PATH = '/upload/'
 
 # media settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
