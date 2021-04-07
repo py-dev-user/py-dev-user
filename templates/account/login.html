@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+    <form class="form" action="{% url 'account_login' %}" method="post">
+        {% csrf_token %}
+        <img class="mb-4" src="{% static 'img/signin.png' %}" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="username" class="sr-only">User name</label>
+        <input id="username" class="form-control" placeholder="User name" name="username" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
+        <div class="password-reset-link mb-2" style="float: left;">
+            <a href="{% url 'account_reset_password' %}">Reset password</a>
+        </div>
+        <div class="signup mb-3">
+            <a href="{{ signup_url }}">Sign Up</a>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <div class="d-grid gap-2 d-md-block" style="margin-top: 10px;">
+            <a href="{% provider_login_url "google" %}">
+                <button class="btn btn-primary" type="button">
+                    <i class="fab fa-google-plus-square"></i>
+                    Google
+                </button>
+            </a>
+            <a href="{% provider_login_url "github" %}">
+                <button class="btn btn-primary" type="button">
+                    <i class="fab fa-github-square"></i>
+                    GitHub
+                </button>
+            </a>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}"/>
+    </form>
+ {% endblock %}
