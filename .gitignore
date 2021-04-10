@@ -8,4 +8,8 @@ venv/
 static/
 media/
 
+*.whl
+
 ttt.py
+
+

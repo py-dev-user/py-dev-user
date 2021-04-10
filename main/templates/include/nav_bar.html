@@ -28,13 +28,15 @@
         </button>
         <ul class="dropdown-menu">
             {% if user.is_authenticated %}
+                <li class="dropdown-item"><strong>{{ user.username }}</strong></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>
 {#                <li><a class="dropdown-item" href="{% url 'password_change'%}">Change password</a></li>#}
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'account_logout'%}">Sign Out</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout'%}">Sign Out</a></li> <!-- account_logout -->
             {% else %}
-                <li><a class="dropdown-item" href="{% url 'account_login'%}">Sign In</a></li>
-                <li><a class="dropdown-item" href="#">Registration</a></li>
+                <li><a class="dropdown-item" href="{% url 'login'%}">Sign In</a></li> <!-- account_login -->
+                <li><a class="dropdown-item" href="{% url 'sign-up' %}">Registration</a></li>
             {% endif %}
         </ul>
     </div>
