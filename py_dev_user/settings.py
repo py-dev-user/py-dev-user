@@ -190,3 +190,6 @@ THUMBNAIL_ALIASES = {
         },
     },
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EМAIL_PORT = 1025

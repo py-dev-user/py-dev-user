@@ -5,10 +5,12 @@ from .views import ItemListView
 from .views import ItemDetailView
 from .views import UserProfileView, update_profile
 from .views import ItemCreateView, ItemUpdateView, ItemDeleteView
+from .views import send_message_to_email
 
 
 urlpatterns = [
     path('', index, name='index'),
+    path('send_message/', send_message_to_email, name='send_msg'),
     path('accounts/profile/<int:pk>', UserProfileView.as_view(), name='profile'),
     path('accounts/profile/update/', update_profile, name='profile-update'),
     path('item/create/', ItemCreateView.as_view(), name='create-item'),

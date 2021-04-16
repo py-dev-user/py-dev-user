@@ -3,7 +3,7 @@
 import django.contrib.auth.models
 from django.db import migrations, models
 import django.db.models.deletion
-import main.utilities
+import py_dev_user.utilities
 import mptt.fields
 
 
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('short_name', models.CharField(db_index=True, max_length=100, verbose_name='Object name')),
                 ('description', models.TextField(verbose_name='Description')),
-                ('image', models.ImageField(blank=True, null=True, upload_to=main.utilities.get_timestamp_path, verbose_name='Image')),
+                ('image', models.ImageField(blank=True, null=True, upload_to=py_dev_user.utilities.get_timestamp_path, verbose_name='Image')),
                 ('type', models.CharField(choices=[('a', 'Apartment'), ('h', 'House'), ('o', 'Hotel'), ('s', 'Hostel')], db_index=True, default='a', help_text='Apartment, House, Hotel, Hostel', max_length=10, verbose_name='Type')),
                 ('published', models.BooleanField(default=True, verbose_name='Published')),
                 ('item_create', models.DateTimeField(auto_now_add=True, verbose_name='created')),
@@ -80,7 +80,7 @@ class Migration(migrations.Migration):
             name='AdditionalImage',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to=main.utilities.get_timestamp_path, verbose_name='Image')),
+                ('image', models.ImageField(upload_to=py_dev_user.utilities.get_timestamp_path, verbose_name='Image')),
                 ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.itemmodel', verbose_name='Item')),
             ],
             options={
