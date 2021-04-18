@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, LogoutView
 
 from .models import ItemModel, TagModel, Profile
 from .forms import UserForm, ProfileForm
@@ -73,7 +72,3 @@ class ItemUpdateView(PermissionRequiredMixin, UpdateView):
 
 class ItemDeleteView(PermissionRequiredMixin, DeleteView):
     pass
-
-
-class MainLoginView(LoginView):
-    template_name = 'main/../templates/registration/login.html'
