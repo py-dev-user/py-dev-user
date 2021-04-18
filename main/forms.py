@@ -6,6 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+from ckeditor.widgets import CKEditorWidget
+
 from .models import Profile
 
 
@@ -30,3 +32,9 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('date_of_birth', 'avatar',)
+
+
+class SendMessage(forms.Form):
+    subject = forms.CharField(max_length=255, label='Subject')
+    body = forms.CharField(widget=CKEditorWidget, label='Message')
+    is_seller = forms.BooleanField(label='Seller only', required=False)

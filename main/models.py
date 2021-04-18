@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
 
-from .utilities import get_timestamp_path
+from py_dev_user.utilities import get_timestamp_path
 
 
 class CategoryModel(MPTTModel):

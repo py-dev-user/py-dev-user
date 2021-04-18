@@ -7,9 +7,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import ItemModel, TagModel, Profile
+from .models import SellerModel
 from .forms import UserForm, ProfileForm
+from .forms import SendMessage
+
+from py_dev_user.utilities import send
 
 
 def index(request):
@@ -72,3 +77,30 @@ class ItemUpdateView(PermissionRequiredMixin, UpdateView):
 
 class ItemDeleteView(PermissionRequiredMixin, DeleteView):
     pass
+
+
+@login_required
+def send_message_to_email(request):
+    if request.method == 'POST':
+        form = SendMessage(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            body = form.cleaned_data['body']
+            is_seller = bool(form.cleaned_data['is_seller'])
+
+            if is_seller:
+                recipients = SellerModel.objects.filter(is_active=True).exclude(email='').values('email')
+            else:
+                recipients = (User.objects.filter(is_active=True).
+                              exclude(email='').exclude(is_staff=True).values('email'))
+
+            if len(recipients) > 0:
+                recipients = [element['email'] for element in recipients]
+
+            send(subject, body, recipients)
+
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = SendMessage()
+
+    return render(request, 'main/send_message.html', {'form': form})
