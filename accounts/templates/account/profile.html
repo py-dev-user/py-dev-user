@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="custom-form">
+        <div class="form-header">
+            <h2 class="h3 mb-3 fw-normal">Profile: {{ user.username }}</h2>
+        </div>
+        <div class="form-floating">
+            <span class="form-control">First name: {{ user.first_name }}</span>
+        </div>
+        <div class="form-floating">
+            <span class="form-control">Last name: {{ user.last_name }}</span>
+        </div>
+        <div class="form-floating">
+            <span class="form-control">Birthday: {{ user.profile.birthdate }}</span>
+        </div>
+        <div class="form-floating">
+            <span class="form-control">First name: {{ user.profile.location }}</span>
+        </div>
+        <div class="form-floating">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" style="max-width: 300px;">
+            {% else %}
+                <span class="form-control">No avatar</span>
+            {% endif %}
+        </div>
+        <a class="w-100 btn btn-lg btn-primary" href="{% url 'profile_update' %}">Change</a>
+    </div>
+{% endblock %}

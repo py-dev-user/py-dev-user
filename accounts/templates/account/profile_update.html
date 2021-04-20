@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% include %}
+
+{% block content %}
+    <main class="custom-form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.errors }}
+            <div class="form-header">
+                <h2 class="h3 mb-3 fw-normal">Profile update</h2>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="text" id="id_f_name" name="first_name" value="{{ user.first_name }}">
+                <label for="id_f_name">First name: </label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="text" id="id_l_name" name="last_name" value="{{ user.last_name }}">
+                <label for="id_l_name">Last name: </label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="date" id="id_birthdate" name="birthdate" value="{{ user.profile.birthdate }}">
+                <label for="id_birthdate">Birthdate: </label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="text" id="id_location" name="location" value="{{ user.profile.location }}">
+                <label for="id_location">Location: </label>
+            </div>
+            <div class="mb-3">
+                <input class="form-control form-control-lg" type="file" name="avatar" id="id_avatar">
+            </div>
+            <div class="form-floating">
+                {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" style="max-width: 300px;">
+                {% else %}
+                    <span class="form-control">No avatar</span>
+                {% endif %}
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Change</button>
+        </form>
+    </main>
+{% endblock %}

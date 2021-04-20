@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load socialaccount %}
+
+{% block content %}
+    <main class="custom-form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="form-header">
+                <h2 class="h3 mb-3 fw-normal">Sign In</h2>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="text" id="id_username" name="login">
+                <label for="id_username">Username: </label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="password" name="password" id="id_password">
+                <label for="id_password">Password: </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit" style="margin-top: 10px;">Sign In</button>
+        </form>
+    </main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <!-- GitHub button starts here -->
+                <a href="{% provider_login_url 'github' %}" class="btn btn-secondary btn-sm" style="width: 200px;">
+                    <i class="bi bi-github" style="width: 25px; height: 25px;"></i>
+                    <span>Login with GitHub</span>
+                </a>
+                <!-- GitHub button ends here -->
+                <!-- Google button starts here -->
+                <a href="{% provider_login_url 'google' %}" class="btn btn-secondary btn-sm" style="width: 200px;">
+                    <i class="bi bi-google" style="width: 25px; height: 25px;"></i>
+                    <span>Login with Google</span>
+                </a>
+                <!-- Google button ends here -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

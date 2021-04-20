@@ -1,8 +1,10 @@
 from django.urls import path
 
-from .views import sign_up
+from .views import profile_view
+from .views import profile_update
 
 
 urlpatterns = [
-    path('sign_up/', sign_up, name="sign-up")
+    path('profile/', profile_view, name='profile'),
+    path('profile/update/', profile_update, name='profile_update'),
 ]
