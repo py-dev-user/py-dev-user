@@ -9,9 +9,9 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .models import ItemModel, TagModel, Profile
+from .models import ItemModel, TagModel # , Profile
 from .models import SellerModel
-from .forms import UserForm, ProfileForm
+# from .forms import UserForm, ProfileForm
 from .forms import SendMessage
 
 from py_dev_user.utilities import send
@@ -38,29 +38,29 @@ class ItemDetailView(DetailView):
     model = ItemModel
 
 
-class UserProfileView(DetailView):
-    model = Profile
-
-
-# позже заменю на класс
-@login_required
-def update_profile(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            return HttpResponseRedirect(reverse('profile', args=[user_form.instance.id]))
-        else:
-            messages.error(request, _('Please fix issues: '))
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'main/profile_form.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
+# class UserProfileView(DetailView):
+#     model = Profile
+#
+#
+# # позже заменю на класс
+# @login_required
+# def update_profile(request):
+#     if request.method == 'POST':
+#         user_form = UserForm(request.POST, instance=request.user)
+#         profile_form = ProfileForm(request.POST, instance=request.user.profile)
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#             return HttpResponseRedirect(reverse('profile', args=[user_form.instance.id]))
+#         else:
+#             messages.error(request, _('Please fix issues: '))
+#     else:
+#         user_form = UserForm(instance=request.user)
+#         profile_form = ProfileForm(instance=request.user.profile)
+#     return render(request, 'main/profile_form.html', {
+#         'user_form': user_form,
+#         'profile_form': profile_form
+#     })
 
 
 class ItemCreateView(PermissionRequiredMixin, CreateView):

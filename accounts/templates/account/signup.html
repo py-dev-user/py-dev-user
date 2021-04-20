@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main class="custom-form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.errors }}
+            <div class="form-header">
+                <h2 class="h3 mb-3 fw-normal">Sign Up</h2>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="text" id="id_username" name="username">
+                <label for="id_username">Username: </label>
+            </div>
+            <!-- <div class="form-floating">
+                <input class="form-control" type="date" name="birth_date" id="id_birth_date">
+                <label for="id_birth_date">Birth date: </label>
+            </div> -->
+            <div class="form-floating">
+                <input class="form-control" type="email" id="id_email" name="email">
+                <label for="id_email">email: </label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="password" name="password1" id="id_password1">
+                <label for="id_password1">Password: </label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="password" name="password2" id="id_password1">
+                <label for="id_password1">Password confirmation: </label>
+            </div>
+            <div class="mb-3">
+                <input class="form-control form-control-lg" type="file" name="avatar" id="id_avatar">
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+        </form>
+    </main>
+{% endblock %}

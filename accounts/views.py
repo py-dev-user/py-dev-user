@@ -1,31 +1,49 @@
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.contrib.auth.models import Group
 from django.urls import reverse
 
-import main.views
+from .forms import ProfileForm
+from .models import Profile
 
 
-def sign_up(request):
-    context = {}
-    group_name = 'common users'
+def index(request):
+    return render(request, 'account/index.html')
 
-    form = UserCreationForm(request.POST or None)
-    if request.method == "POST":
+
+@login_required
+def profile_view(request):
+    user = request.user
+    return render(request, 'account/profile.html', {'user': user})
+
+
+@login_required
+def profile_update(request):
+    user = request.user
+    user_profile = get_object_or_404(Profile, user=user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
-            groups = Group.objects.filter(name=group_name)
-            if len(groups) > 0:
-                group = groups[0]
-            else:
-                group = Group(name=group_name)
-                group.save()
-            group.user_set.add(user)
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.save()
 
-            return HttpResponseRedirect(reverse('login'))
+            user_profile.birthdate = form.cleaned_data['birthdate']
+            user_profile.location = form.cleaned_data['location']
+            user_profile.avatar = request.FILES.get('avatar')   # form.cleaned_data['avatar']
+            user_profile.save()
 
-    context['form'] = form
+            return HttpResponseRedirect(reverse('profile'))
+    else:
+        data = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'birthdate': user_profile.birthdate,
+            'location': user_profile.location,
+            'avatar': user_profile.avatar
+        }
 
-    return render(request, 'registration/sign_up.html', context)
+        form = ProfileForm(data)
+
+    return render(request, 'account/profile_update.html', {'form': form, 'user': user})

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load socialaccount %}
+
+{% block content %}
+    <div class="container" style="text-align: center; padding-top: 10%;">
+        <h1>Django Social Login</h1>
+        <br/><br/>
+        {% if user.is_authenticated %}
+            <h3>Welcome {{ user.username }} !!!</h3>
+            <br/><br/>
+            <a href="{% url 'account_logout' %}" class="btn btn-danger">Logout</a>
+        {% else %}
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <!-- GitHub button starts here -->
+                    <a href="{% provider_login_url 'github' %}" class="btn btn-secondary btn-lg" style="width: 250px;">
+                        <i class="bi bi-github" style="width: 25px; height: 25px;"></i>
+                        <span>Login with GitHub</span>
+                    </a>
+                    <!-- GitHub button ends here -->
+                    <!-- Google button starts here -->
+                    <a href="{% provider_login_url 'google' %}" class="btn btn-secondary btn-lg" style="width: 250px;">
+                        <i class="bi bi-google" style="width: 25px; height: 25px;"></i>
+                        <span>Login with Google</span>
+                    </a>
+                    <!-- Google button ends here -->
+                </div>
+            </div>
+            <div class="row mt-2">
+            <div class="col-3"></div>
+                <div class="col-6">
+                    <!-- Sign Up button starts here -->
+                    <a href="{% url 'account_signup' %}" class="btn btn-secondary btn-lg" style="width: 250px;">
+                        <i class="bi bi-person-plus-fill" style="width: 25px; height: 25px;"></i>
+                        <span>Sign Up</span>
+                    </a>
+                    <!-- Sign Up button ends here -->
+                    <!-- Sign In button starts here -->
+                    <a href="{% url 'account_login' %}" class="btn btn-secondary btn-lg" style="width: 250px;">
+                        <i class="bi bi-person-check-fill" style="width: 25px; height: 25px;"></i>
+                        <span>Sign In</span>
+                    </a>
+                    <!-- Sign In button ends here -->
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

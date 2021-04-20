@@ -11,7 +11,7 @@ from .models import CategoryModel
 from .models import TagModel
 from .models import SellerModel
 from .models import CurrencyModel
-from .models import Profile
+# from .models import Profile
 
 from ckeditor.widgets import CKEditorWidget
 
@@ -93,22 +93,22 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent')
 
 
-class UserProfileInline(admin.TabularInline):
-    model = Profile
-    fields = ('avatar', 'date_of_birth',)
-
-
-class UserAdminCustom(UserAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'date_joined')
-    list_filter = ('is_staff', 'is_superuser')
-    ordering = ('id',)
-    inlines = (UserProfileInline,)
-
-    readonly_fields = ('last_login', 'date_joined')
-
-
-admin.site.unregister(User)
-admin.site.register(User, UserAdminCustom)
+# class UserProfileInline(admin.TabularInline):
+#     model = Profile
+#     fields = ('avatar', 'date_of_birth',)
+#
+#
+# class UserAdminCustom(UserAdmin):
+#     list_display = ('username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'date_joined')
+#     list_filter = ('is_staff', 'is_superuser')
+#     ordering = ('id',)
+#     inlines = (UserProfileInline,)
+#
+#     readonly_fields = ('last_login', 'date_joined')
+#
+#
+# admin.site.unregister(User)
+# admin.site.register(User, UserAdminCustom)
 
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, FlatPageCustom)

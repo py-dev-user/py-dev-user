@@ -1,0 +1,3 @@
+Hi {{ user_display }}.
+You registered on {{ current_site.domain }}.
+Please confirm your email, click on this link: {{ activate_url }}.
