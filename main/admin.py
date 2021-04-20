@@ -11,7 +11,7 @@ from .models import CategoryModel
 from .models import TagModel
 from .models import SellerModel
 from .models import CurrencyModel
-# from .models import Profile
+from .models import Subscriber
 
 from ckeditor.widgets import CKEditorWidget
 
@@ -119,3 +119,4 @@ admin.site.register(CategoryModel, CategoryAdmin)
 admin.site.register(TagModel)
 admin.site.register(SellerModel, SellerAdmin)
 admin.site.register(CurrencyModel, CurrencyAdmin)
+admin.site.register(Subscriber)
