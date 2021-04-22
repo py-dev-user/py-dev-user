@@ -12,6 +12,7 @@ from .models import TagModel
 from .models import SellerModel
 from .models import CurrencyModel
 from .models import Subscriber
+from .models import ItemReports
 
 from ckeditor.widgets import CKEditorWidget
 
@@ -93,6 +94,10 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent')
 
 
+class ItemReportsAdmin(admin.ModelAdmin):
+    list_display = ('item', 'is_send')
+
+
 # class UserProfileInline(admin.TabularInline):
 #     model = Profile
 #     fields = ('avatar', 'date_of_birth',)
@@ -120,3 +125,4 @@ admin.site.register(TagModel)
 admin.site.register(SellerModel, SellerAdmin)
 admin.site.register(CurrencyModel, CurrencyAdmin)
 admin.site.register(Subscriber)
+admin.site.register(ItemReports, ItemReportsAdmin)
