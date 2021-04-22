@@ -1,0 +1,23 @@
+
+redis:
+  image: redis
+  command: redis-server --requirepass 123456
+  container_name: redis_srv
+  ports:
+    - "127.0.0.1:6370:6379"
+
+  volumes:
+    - $PWD/redis-data:/var/lib/redis
+    # - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+
+  environment:
+    - REDIS_REPLICATION_MODE=master
+
+db:
+  image: postgres
+  ports:
+    - "127.0.0.1:5430:5432"
+  environment:
+    POSTGRES_DB: "postgres"
+    POSTGRES_USER: "postgres"
+    POSTGRES_PASSWORD: "postgres"

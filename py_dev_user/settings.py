@@ -94,10 +94,19 @@ AUTHENTICATION_BACKENDS = (
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': 5430,
     }
+
 }
 
 # Password validation
@@ -201,3 +210,6 @@ ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_PORT = 1025
+
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6370
