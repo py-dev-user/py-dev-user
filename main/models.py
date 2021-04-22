@@ -3,14 +3,11 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.conf import settings
-from django.utils.html import strip_tags
 
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
 
 from py_dev_user.utilities import get_timestamp_path
-from py_dev_user.utilities import send
 
 
 class CategoryModel(MPTTModel):
@@ -101,6 +98,21 @@ class AdditionalImage(models.Model):
 class Subscriber(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.username
+
+
+class ItemReports(models.Model):
+    item = models.OneToOneField(ItemModel, on_delete=models.CASCADE)
+    is_send = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.item.short_name
+
+    class Meta:
+        verbose_name = 'Item report'
+        ordering = ['-is_send']
+
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)
 #     avatar = models.ImageField(verbose_name='Avatar', blank=True, null=True, upload_to=get_timestamp_path)
@@ -123,42 +135,7 @@ class Subscriber(models.Model):
 
 @receiver(post_save, sender=ItemModel)
 def create_item_dispatcher(sender, **kwargs):
-    html_msg = """
-<h3>Здравствуйте {user_name},</h3>
-
-<p>Появился товар, который может Вас заинтересовать:</p>
-<div>
-    <h4>{title}</h4>
-    <p>{description}</p>
-    <p>Цена: {price}</p>
-    Подробнее: {link}
-</div>
-    """
-
-    subscribers = Subscriber.objects.all()
     item = kwargs['instance']
-    if settings.ALLOWED_HOSTS:
-        host = 'http://' + settings.ALLOWED_HOSTS[0]
-    else:
-        host = 'http://localhost:8000'
-
-    for subscriber in subscribers:
-        user_name = subscriber.user.last_name + ', ' + subscriber.user.first_name
-        title = item.short_name
-        description = item.description
-        price = str(item.price) + ' ' + str(item.currency)
-
-        link = '{host}/main/item/{item_id}/'.format(
-            host=host,
-            item_id=item.id
-        )
-
-        html_message = html_msg.format(
-            user_name=user_name,
-            title=title,
-            description=description,
-            price=price,
-            link=link
-        )
-
-        send('Новые поступления.', html_message, [subscriber.user.email, ])
+    item_reports = ItemReports()
+    item_reports.item = item
+    item_reports.save()
