@@ -1,9 +1,13 @@
 from django.conf import settings
 
-from .models import Subscriber
-from .models import ItemReports
+from celery import shared_task
+from celery.schedules import crontab
 
 from py_dev_user.utilities import send
+from py_dev_user.celery import app
+
+from .models import Subscriber
+from .models import ItemReports
 
 
 def report():
@@ -70,3 +74,34 @@ def report():
         )
 
         send('Новые поступления.', message, [subscriber.user.email, ])
+
+
+@shared_task
+def one():
+    print('one')
+
+
+@shared_task
+def two():
+    print('two')
+
+
+@shared_task
+def three():
+    print('three')
+
+
+app.conf.beat_schedule = {
+    'task_one': {
+        'task': 'main.tasks.one',
+        'schedule': 2
+    },
+    'task_two': {
+        'task': 'main.tasks.two',
+        'schedule': 4
+    },
+    'task_three': {
+        'task': 'main.tasks.three',
+        'schedule': 6
+    }
+}

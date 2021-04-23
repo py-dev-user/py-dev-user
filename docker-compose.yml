@@ -1,7 +1,7 @@
 
 redis:
   image: redis
-  command: redis-server --requirepass 123456
+  # command: redis-server --requirepass 123456
   container_name: redis_srv
   ports:
     - "127.0.0.1:6370:6379"

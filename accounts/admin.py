@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 from .models import Profile
+from .models import Sender
 
 
 class ProfileInline(admin.StackedInline):
@@ -38,5 +39,10 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 
+class SenderAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email')
+
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Sender, SenderAdmin)

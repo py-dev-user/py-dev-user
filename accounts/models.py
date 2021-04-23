@@ -28,6 +28,12 @@ class Profile(models.Model):
         verbose_name_plural = 'User Profiles'
 
 
+class Sender(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    is_active = models.BooleanField(default=False)
+
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
