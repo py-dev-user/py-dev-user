@@ -45,4 +45,5 @@ class ProfileForm(forms.Form):
     last_name = forms.CharField(label='Last name', max_length=50, required=False)
     birthdate = forms.DateField(label='Birthdate', required=False)
     location = forms.CharField(label='Location', max_length=50, required=False)
+    phone_number = forms.CharField(label='phone', max_length=20, required=False)
     avatar = forms.ImageField(label='Avatar', required=False)

@@ -15,6 +15,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='profile/', null=True, blank=True)
     location = models.CharField(max_length=30, null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
     last_updated_time = models.DateTimeField('Last modified', auto_now=True)
 
     def save(self, *args, **kwargs):

@@ -218,3 +218,8 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = 'redis://localhost:6370'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+TWILIO_ACCOUNT_SID = ''     # os.environ['TWILIO_ACCOUNT_SID']
+TWILIO_AUTH_TOKEN = ''      # os.environ['TWILIO_AUTH_TOKEN']
+
+SMS_NUMBER_FROM = ''        # os.environ['SMS_NUMBER_FROM']

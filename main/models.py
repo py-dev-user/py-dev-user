@@ -113,6 +113,16 @@ class ItemReports(models.Model):
         verbose_name = 'Item report'
         ordering = ['-is_send']
 
+
+class SMSLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=2048)
+    response = models.CharField(max_length=10)
+    log_create = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'SMS Log'
+
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)
 #     avatar = models.ImageField(verbose_name='Avatar', blank=True, null=True, upload_to=get_timestamp_path)
