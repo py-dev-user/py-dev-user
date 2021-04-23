@@ -1,13 +1,14 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 
-from celery import shared_task
-from celery.schedules import crontab
+# from celery import shared_task
 
 from py_dev_user.utilities import send
 from py_dev_user.celery import app
 
 from .models import Subscriber
 from .models import ItemReports
+from .models import SellerModel
 
 
 def report():
@@ -76,32 +77,42 @@ def report():
         send('Новые поступления.', message, [subscriber.user.email, ])
 
 
-@shared_task
-def one():
-    print('one')
+@app.task(name='send_circular_message')
+def send_circular_message(subj, body, is_seller):
+    if is_seller:
+        recipients = SellerModel.objects.filter(is_active=True).exclude(email='').values('email')
+    else:
+        recipients = (User.objects.filter(is_active=True).
+                      exclude(email='').exclude(is_staff=True).values('email'))
+
+    if len(recipients) > 0:
+        recipients = [element['email'] for element in recipients]
+
+    for email in recipients:
+        send(subj, body, [email, ])
 
 
-@shared_task
-def two():
-    print('two')
+# @shared_task
+# def two():
+#     print('two')
+#
+#
+# @shared_task
+# def three():
+#     print('three')
 
 
-@shared_task
-def three():
-    print('three')
-
-
-app.conf.beat_schedule = {
-    'task_one': {
-        'task': 'main.tasks.one',
-        'schedule': 2
-    },
-    'task_two': {
-        'task': 'main.tasks.two',
-        'schedule': 4
-    },
-    'task_three': {
-        'task': 'main.tasks.three',
-        'schedule': 6
-    }
-}
+# app.conf.beat_schedule = {
+#     # 'task_one': {
+#     #     'task': 'main.tasks.one',
+#     #     'schedule': 2
+#     # },
+#     'task_two': {
+#         'task': 'main.tasks.two',
+#         'schedule': 4
+#     },
+#     'task_three': {
+#         'task': 'main.tasks.three',
+#         'schedule': 6
+#     }
+# }

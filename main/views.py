@@ -84,20 +84,7 @@ def send_message_to_email(request):
     if request.method == 'POST':
         form = SendMessage(request.POST)
         if form.is_valid():
-            subject = form.cleaned_data['subject']
-            body = form.cleaned_data['body']
-            is_seller = bool(form.cleaned_data['is_seller'])
-
-            if is_seller:
-                recipients = SellerModel.objects.filter(is_active=True).exclude(email='').values('email')
-            else:
-                recipients = (User.objects.filter(is_active=True).
-                              exclude(email='').exclude(is_staff=True).values('email'))
-
-            if len(recipients) > 0:
-                recipients = [element['email'] for element in recipients]
-
-            send(subject, body, recipients)
+            form.send_messages()
 
             return HttpResponseRedirect(reverse('index'))
     else:
