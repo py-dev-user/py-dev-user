@@ -8,6 +8,8 @@ from django import forms
 
 from ckeditor.widgets import CKEditorWidget
 
+from .tasks import send_circular_message
+
 # from .models import Profile
 
 
@@ -38,3 +40,10 @@ class SendMessage(forms.Form):
     subject = forms.CharField(max_length=255, label='Subject')
     body = forms.CharField(widget=CKEditorWidget, label='Message')
     is_seller = forms.BooleanField(label='Seller only', required=False)
+
+    def send_messages(self):
+        if len(self.cleaned_data['subject']) and len(self.cleaned_data['body']):
+            subj = self.cleaned_data['subject']
+            body = self.cleaned_data['body']
+            is_seller = bool(self.cleaned_data['is_seller'])
+            send_circular_message.delay(subj, body, is_seller)
