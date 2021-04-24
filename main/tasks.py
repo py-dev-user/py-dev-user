@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 
-# from celery import shared_task
+from celery import shared_task
+from celery.schedules import crontab
+
+from twilio.rest import Client
 
 from py_dev_user.utilities import send
 from py_dev_user.celery import app
@@ -9,8 +12,10 @@ from py_dev_user.celery import app
 from .models import Subscriber
 from .models import ItemReports
 from .models import SellerModel
+from .models import SMSLog
 
 
+@shared_task
 def report():
     html_table = """
 <h3>Здравствуйте {user_name},</h3>
@@ -92,27 +97,35 @@ def send_circular_message(subj, body, is_seller):
         send(subj, body, [email, ])
 
 
-# @shared_task
-# def two():
-#     print('two')
-#
-#
-# @shared_task
-# def three():
-#     print('three')
+@shared_task(name='sms_sender')
+def sms_report():
+    from random import randint
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    subscribers = Subscriber.objects.filter(user__profile__phone_number__isnull=False)
+    for subscriber in subscribers:
+        body = str(randint(1000, 9999))
+        phone_number = subscriber.user.profile.phone_number
+        message = client.messages.create(
+            from_=settings.SMS_NUMBER_FROM,
+            to=phone_number,
+            body=body
+        )
+
+        log = SMSLog()
+        log.user = subscriber.user
+        log.message = body
+        log.response = message.status
+        log.save()
 
 
-# app.conf.beat_schedule = {
-#     # 'task_one': {
-#     #     'task': 'main.tasks.one',
-#     #     'schedule': 2
-#     # },
-#     'task_two': {
-#         'task': 'main.tasks.two',
-#         'schedule': 4
-#     },
-#     'task_three': {
-#         'task': 'main.tasks.three',
-#         'schedule': 6
-#     }
-# }
+app.conf.beat_schedule = {
+    'task_report': {
+        'task': 'main.tasks.report',
+        'schedule': crontab(minute='0', hour='9', day_of_week='mon')
+        # 'schedule': crontab(minute='*/1')
+    },
+    'task_sms_sender': {
+        'task': 'main.tasks.sms_report',
+        'schedule': crontab(0, 0, day_of_month='11', month_of_year='5')
+    }
+}

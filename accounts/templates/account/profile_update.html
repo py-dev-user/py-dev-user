@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% include %}
+{#{% include %}#}
 
 {% block content %}
     <main class="custom-form">
@@ -12,23 +12,33 @@
                 <h2 class="h3 mb-3 fw-normal">Profile update</h2>
             </div>
             <div class="form-floating">
-                <input class="form-control" type="text" id="id_f_name" name="first_name" value="{{ user.first_name }}">
+                <input class="form-control" type="text" id="id_f_name" name="first_name"
+                       value="{{ user.first_name }}">
                 <label for="id_f_name">First name: </label>
             </div>
             <div class="form-floating">
-                <input class="form-control" type="text" id="id_l_name" name="last_name" value="{{ user.last_name }}">
+                <input class="form-control" type="text" id="id_l_name" name="last_name"
+                       value="{{ user.last_name }}">
                 <label for="id_l_name">Last name: </label>
             </div>
             <div class="form-floating">
-                <input class="form-control" type="date" id="id_birthdate" name="birthdate" value="{{ user.profile.birthdate }}">
+                <input class="form-control" type="date" id="id_birthdate" name="birthdate"
+                       value="{{ user.profile.birthdate }}">
                 <label for="id_birthdate">Birthdate: </label>
             </div>
             <div class="form-floating">
-                <input class="form-control" type="text" id="id_location" name="location" value="{{ user.profile.location }}">
+                <input class="form-control" type="text" id="id_location" name="location"
+                       value="{{ user.profile.location }}">
                 <label for="id_location">Location: </label>
             </div>
+            <div class="form-floating">
+                <input class="form-control" type="text" id="id_phone_number" name="phone_number"
+                       value="{{ user.profile.phone_number }}">
+                <label for="id_phone_number">Phone number: </label>
+            </div>
             <div class="mb-3">
-                <input class="form-control form-control-lg" type="file" name="avatar" id="id_avatar">
+                <input class="form-control form-control-lg" type="file" name="avatar" id="id_avatar"
+                       value="{{ user.profile.avatar }}">
             </div>
             <div class="form-floating">
                 {% if user.profile.avatar %}

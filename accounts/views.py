@@ -31,6 +31,7 @@ def profile_update(request):
 
             user_profile.birthdate = form.cleaned_data['birthdate']
             user_profile.location = form.cleaned_data['location']
+            user_profile.phone_number = form.cleaned_data['phone_number']
             user_profile.avatar = request.FILES.get('avatar')   # form.cleaned_data['avatar']
             user_profile.save()
 
@@ -41,6 +42,7 @@ def profile_update(request):
             'last_name': user.last_name,
             'birthdate': user_profile.birthdate,
             'location': user_profile.location,
+            'phone_number': user_profile.phone_number,
             'avatar': user_profile.avatar
         }
 
