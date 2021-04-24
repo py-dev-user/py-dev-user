@@ -7,7 +7,6 @@ from py_dev_user.utilities import send
 
 
 def report():
-    print('Run task')
     html_table = """
 <h3>Здравствуйте {user_name},</h3>
 
