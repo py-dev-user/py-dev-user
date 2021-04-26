@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -52,6 +55,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.google",
     "django_apscheduler",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -63,6 +67,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'py_dev_user.middleware.metric_middleware',
 ]
 
 ROOT_URLCONF = 'py_dev_user.urls'
@@ -223,3 +229,15 @@ TWILIO_ACCOUNT_SID = ''     # os.environ['TWILIO_ACCOUNT_SID']
 TWILIO_AUTH_TOKEN = ''      # os.environ['TWILIO_AUTH_TOKEN']
 
 SMS_NUMBER_FROM = ''        # os.environ['SMS_NUMBER_FROM']
+
+# caching
+CACHE_TTL = 60 * 5
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6370/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

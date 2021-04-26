@@ -12,5 +12,6 @@ media/
 
 ttt.py
 
-
 /command_lines.txt
+
+*.db

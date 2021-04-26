@@ -2,19 +2,25 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
 from django.http.response import HttpResponseRedirect
-from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+# from django.contrib import messages
+# from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 from .models import ItemModel, TagModel # , Profile
-from .models import SellerModel
+# from .models import SellerModel
 # from .forms import UserForm, ProfileForm
 from .forms import SendMessage
 
-from py_dev_user.utilities import send
+# from py_dev_user.utilities import send
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 def index(request):
@@ -22,6 +28,7 @@ def index(request):
     return render(request, 'main/index.html', {'turn_on_block': turn_on_block})
 
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class ItemListView(ListView):
     model = ItemModel
     paginate_by = 5
